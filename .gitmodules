@@ -1,0 +1,6 @@
+[submodule "authentication_service/protos"]
+	path = authentication_service/protos
+	url = git@github.com:My-Restaurant-project/protos.git
+[submodule "protos"]
+	path = protos
+	url = git@github.com:My-Restaurant-project/protos.git
