@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	user "github.com/Projects/Restaurant_Reservation_System/authentication_service/genproto/authentication_service"
+	user "authentication_service/genproto/authentication_service"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"golang.org/x/crypto/bcrypt"
