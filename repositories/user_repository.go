@@ -17,7 +17,6 @@ func NewUserRepository(db *sqlx.DB) *UserRepository {
 
 func (r *UserRepository) Login(userReq *user.LoginRequest) (*user.LoginResponse, error) {
 	return nil, nil
-
 }
 
 func (r *UserRepository) GetProfileById(userReq *user.UserIdRequest) (*user.UserIdResponse, error) {
