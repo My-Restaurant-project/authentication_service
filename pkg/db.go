@@ -2,6 +2,7 @@ package pkg
 
 import (
 	config "authentication_service/configs"
+	_ "github.com/lib/pq"
 	"database/sql"
 	"fmt"
 )

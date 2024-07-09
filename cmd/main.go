@@ -15,6 +15,7 @@ import (
 func main() {
 
 	config := config.Load()
+
 	db, err := pkg.ConnectDB()
 	if err != nil {
 		log.Fatalf("failed to connect to db: %v", err)
@@ -25,9 +26,11 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	defer listener.Close()
+
 	log.Printf("Server started on port " + config.URL_PORT)
 
 	authStorage := repositories.NewUserRepository(db)
+
 
 	as := services.NewAuthService(authStorage)
 
