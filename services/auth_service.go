@@ -3,8 +3,8 @@ package services
 import (
 	"context"
 
-	pb "github.com/Projects/Restaurant_Reservation_System/authentication_service/genproto/authentication_service"
-	"github.com/Projects/Restaurant_Reservation_System/authentication_service/repositories"
+	pb "authentication_service/genproto/authentication_service"
+	"authentication_service/repositories"
 )
 
 type AuthService struct {
