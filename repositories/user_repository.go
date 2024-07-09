@@ -2,16 +2,17 @@ package repositories
 
 import (
 	user "authentication_service/genproto/authentication_service"
+	"database/sql"
+
 	"github.com/google/uuid"
-	"github.com/jmoiron/sqlx"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type UserRepository struct {
-	db *sqlx.DB
+	db *sql.DB
 }
 
-func NewUserRepository(db *sqlx.DB) *UserRepository {
+func NewUserRepository(db *sql.DB) *UserRepository {
 	return &UserRepository{db}
 }
 
