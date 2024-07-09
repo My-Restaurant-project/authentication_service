@@ -3,6 +3,8 @@ package repositories
 import (
 	user "authentication_service/genproto/authentication_service"
 	"database/sql"
+	"fmt"
+	"log"
 
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
@@ -17,19 +19,31 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 }
 
 func (r *UserRepository) Login(userReq *user.LoginRequest) (*user.LoginResponse, error) {
-	email := userReq.Email
-	password := bcrypt.CompareHashAndPassword([]byte(userReq.Password), []byte(userReq.Password))
+	res := user.LoginResponse{}
+	query :=
+		`
+			SELECT password_hash from users WHERE email = $1
+		`
 
-	query := `select password from users where email = $1`
-	err := r.db.QueryRow(query, email, password).Scan(&password)
+	log.Println(userReq.Password)
+	var password_hash string
+	err := r.db.QueryRow(query, userReq.Email).Scan(&password_hash)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			res.Success = false
+			return &res, fmt.Errorf("error getting user from database: not rows found")
+		}
 		return nil, err
 	}
 
-	return &user.LoginResponse{
-		Success: true,
-	}, nil
+	err = bcrypt.CompareHashAndPassword([]byte(password_hash), []byte(userReq.Password))
+	if err != nil {
+		res.Success = false
+		return &res, fmt.Errorf("invalid password")
+	}
 
+	res.Success = true
+	return &res, nil
 }
 
 func (r *UserRepository) GetProfileById(userReq *user.UserIdRequest) (*user.UserIdResponse, error) {

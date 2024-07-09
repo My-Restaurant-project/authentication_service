@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"fmt"
 
 	pb "authentication_service/genproto/authentication_service"
 	"authentication_service/repositories"
@@ -17,7 +18,9 @@ func NewAuthService(db *repositories.UserRepository) *AuthService {
 }
 
 func (s *AuthService) Login(ctx context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
+	fmt.Println(req.Password)
 	user, err := s.repo.Login(req)
+
 	if err != nil {
 		return nil, err
 	}
