@@ -47,13 +47,15 @@ func (r *UserRepository) Login(userReq *user.LoginRequest) (*user.LoginResponse,
 }
 
 func (r *UserRepository) GetProfileById(userReq *user.UserIdRequest) (*user.UserIdResponse, error) {
-	query := `select username, email, password from users where id = $1`
+	query := `select username, email, password_hash from users where id = $1`
 	row := r.db.QueryRow(query, userReq.Id)
 	var res user.UserIdResponse
-
+	res.Profile = &user.Profile{}
+	
 	err := row.Scan(&res.Profile.Name, &res.Profile.Email, &res.Profile.Password)
 	if err != nil {
-		return nil, err
+		log.Println(err)
+		return &user.UserIdResponse{Profile: &user.Profile{}}, err
 	}
 	return &res, nil
 }
