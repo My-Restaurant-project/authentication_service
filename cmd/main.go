@@ -21,7 +21,7 @@ func main() {
 		log.Fatalf("failed to connect to db: %v", err)
 	}
 	defer db.Close()
-	listener, err := net.Listen("tcp", config.URL_PORT)
+	listener, err := net.Listen("tcp", ":"+config.URL_PORT)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
