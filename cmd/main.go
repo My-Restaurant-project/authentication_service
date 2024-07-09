@@ -1,8 +1,8 @@
 package main
 
 import (
-	pb "authentication_service/genproto/authentication_service"
 	config "authentication_service/configs"
+	pb "authentication_service/genproto/authentication_service"
 	"authentication_service/pkg"
 	"authentication_service/repositories"
 	"authentication_service/services"
@@ -25,12 +25,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
+
 	defer listener.Close()
 
 	log.Printf("Server started on port " + config.URL_PORT)
 
 	authStorage := repositories.NewUserRepository(db)
-
 
 	as := services.NewAuthService(authStorage)
 

@@ -45,7 +45,7 @@ func (r *UserRepository) GetProfileById(userReq *user.UserIdRequest) (*user.User
 }
 
 func (r *UserRepository) Register(userReq *user.RegisterRequest) (*user.RegisterResponse, error) {
-	query := `INSERT INTO users (id, username, password, email)values($1, $2, $3, $4)`
+	query := `INSERT INTO users (id, username, password_hash, email)values($1, $2, $3, $4)`
 
 	password, err := HashPassword(userReq.Profile.Password)
 	if err != nil {

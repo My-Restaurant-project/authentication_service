@@ -1,4 +1,8 @@
 /vendor
 .env
 Makefile
+<<<<<<< HEAD
 /.idea
+=======
+/.idea
+>>>>>>> 7aeeaa1 (no changes)

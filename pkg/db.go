@@ -5,6 +5,8 @@ import (
 	_ "github.com/lib/pq"
 	"database/sql"
 	"fmt"
+
+	_ "github.com/lib/pq"
 )
 
 func ConnectDB() (*sql.DB, error) {
