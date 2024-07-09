@@ -2,6 +2,7 @@ package repositories
 
 import (
 	user "authentication_service/genproto/authentication_service"
+
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"golang.org/x/crypto/bcrypt"
@@ -20,14 +21,15 @@ func (r *UserRepository) Login(userReq *user.LoginRequest) (*user.LoginResponse,
 	password := bcrypt.CompareHashAndPassword([]byte(userReq.Password), []byte(userReq.Password))
 
 	query := `select password from users where email = $1`
-	pass := r.db.QueryRow(query, email, password).Scan(&password)
-	if pass.Error != nil {
-		return nil, pass
+	err := r.db.QueryRow(query, email, password).Scan(&password)
+	if err != nil {
+		return nil, err
 	}
 
 	return &user.LoginResponse{
 		Success: true,
 	}, nil
+
 }
 
 func (r *UserRepository) GetProfileById(userReq *user.UserIdRequest) (*user.UserIdResponse, error) {
