@@ -2,6 +2,7 @@ package repositories
 
 import (
 	user "authentication_service/genproto/authentication_service"
+	"database/sql"
 
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
