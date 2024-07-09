@@ -16,10 +16,30 @@ func NewUserRepository(db *sqlx.DB) *UserRepository {
 }
 
 func (r *UserRepository) Login(userReq *user.LoginRequest) (*user.LoginResponse, error) {
-	return nil, nil
+	email := userReq.Email
+	password := bcrypt.CompareHashAndPassword([]byte(userReq.Password), []byte(userReq.Password))
+
+	query := `select password from users where email = $1`
+	pass := r.db.QueryRow(query, email, password).Scan(&password)
+	if pass.Error != nil {
+		return nil, pass
+	}
+
+	return &user.LoginResponse{
+		Success: true,
+	}, nil
 }
+
 func (r *UserRepository) GetProfileById(userReq *user.UserIdRequest) (*user.UserIdResponse, error) {
-	return nil, nil
+	query := `select username, email, password from users where id = $1`
+	row := r.db.QueryRow(query, userReq.Id)
+	var res user.UserIdResponse
+
+	err := row.Scan(&res.Profile.Name, &res.Profile.Email, &res.Profile.Password)
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
 
 func (r *UserRepository) Register(userReq *user.RegisterRequest) (*user.RegisterResponse, error) {
