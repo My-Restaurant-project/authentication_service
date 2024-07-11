@@ -54,7 +54,7 @@ func TestLogin(t *testing.T) {
 func TestGetProfileById(t *testing.T) {
 	db := Connect()
 	user := pb.UserIdRequest{
-		Id: "edafbfa1-513f-4476-a167-9d32351300aa",
+		Id: "5a9c15ca-9b54-4b41-9e2e-a5dcc23d4254",
 	}
 
 	profile, err := NewUserRepository(db).GetProfileById(&user)
@@ -83,9 +83,9 @@ func TestRegister(t *testing.T) {
 	id := uuid.NewString()
 	profile := &pb.Profile{
 		Id:       id,
-		Name:     "nimadurov",
-		Email:    "nimadurov@gmail.com",
-		Password: "nimadur12",
+		Name:     "kimdir",
+		Email:    "kimdirovkimdir@gmail.com",
+		Password: "kimdirov",
 		Role:     "role",
 	}
 
@@ -110,12 +110,12 @@ func TestRegister(t *testing.T) {
 		t.Errorf("Email mos kelmadi. Kutilgan email: %s, Olingan email: %s", profile.Email, resp.Profile.Email)
 	}
 
-	if resp.Profile.Password!=profile.Password{
-		t.Errorf("Password mos emas. Kutilgan password: %v,Olingan password: %v",profile.Password,resp.Profile.Password)
+	if resp.Profile.Password != profile.Password {
+		t.Errorf("Password mos emas. Kutilgan password: %v,Olingan password: %v", profile.Password, resp.Profile.Password)
 	}
 
-	_,err=db.Exec("delete from users where id=$1",id)
-	if err!=nil{
-		t.Fatalf("Sinov uchun yaratilgan userni o'chirishda xatolik: %v",err)
+	_, err = db.Exec("delete from users where id=$1", id)
+	if err != nil {
+		t.Fatalf("Sinov uchun yaratilgan userni o'chirishda xatolik: %v", err)
 	}
 }
