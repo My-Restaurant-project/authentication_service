@@ -25,7 +25,6 @@ func (r *UserRepository) Login(userReq *user.LoginRequest) (*user.LoginResponse,
 			SELECT password_hash from users WHERE email = $1
 		`
 
-	log.Println(userReq.Password)
 	var password_hash string
 	err := r.db.QueryRow(query, userReq.Email).Scan(&password_hash)
 	if err != nil {
@@ -51,7 +50,7 @@ func (r *UserRepository) GetProfileById(userReq *user.UserIdRequest) (*user.User
 	row := r.db.QueryRow(query, userReq.Id)
 	var res user.UserIdResponse
 	res.Profile = &user.Profile{}
-	
+
 	err := row.Scan(&res.Profile.Name, &res.Profile.Email, &res.Profile.Password)
 	if err != nil {
 		log.Println(err)
